@@ -11,6 +11,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "paths": {
+      "ngx-nc-cookies-pref": [
+        "dist/ngx-nc-cookies-pref"
+      ]
+    },
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
