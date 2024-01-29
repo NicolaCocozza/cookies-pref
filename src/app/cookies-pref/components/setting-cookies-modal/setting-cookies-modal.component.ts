@@ -17,7 +17,7 @@ import {ConfigModalModel} from '../../models/config-modal.model';
     selector: 'setting-cookies-modal',
     standalone: true,
     template: `
-        <div id="cookies-pref-modal">
+        <div id="cookies-pref-modal" style="z-index: 1050; !important;">
             <div id="cookies-pref-modal-header" class="modal-header">
                 <h4 id="cookies-pref-modal-header-title" class="font-weight-bold" *ngIf="configModal?.textTitleModal"
                     [style.color]="configModal?.colorPrincipalText"
