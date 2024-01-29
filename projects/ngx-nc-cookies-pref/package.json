@@ -1,0 +1,25 @@
+{
+    "name": "ngx-nc-cookies-pref",
+    "author": "Nicola Cocozza",
+    "description": "In a project angular set a cookies preferencies.",
+    "version": "0.0.1",
+    "private": false,
+    "keywords": [
+        "cookies",
+        "cookies-pref",
+        "angular",
+        "ng",
+        "ngx"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NicolaCocozza/cookies-pref.git"
+    },"peerDependencies": {
+    "@angular/common": "^15.2.0",
+    "@angular/core": "^15.2.0"
+    },
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "sideEffects": false
+}
