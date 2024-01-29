@@ -2,6 +2,8 @@
  * Public API Surface of ngx-nc-cookies-pref
  */
 
-export * from './lib/ngx-nc-cookies-pref.service';
-export * from './lib/ngx-nc-cookies-pref.component';
-export * from './lib/ngx-nc-cookies-pref.module';
+export * from './cookies-pref/components/popup-cookies/popup-cookies.component';
+export * from './cookies-pref/components/setting-cookies-modal/setting-cookies-modal.component';
+export * from './cookies-pref/models/config-modal.model';
+export * from './cookies-pref/models/cookies-pref.model';
+export * from './cookies-pref/models/config-popup.model';
