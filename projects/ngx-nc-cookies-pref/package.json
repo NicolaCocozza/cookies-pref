@@ -3,6 +3,7 @@
     "author": "Nicola Cocozza",
     "description": "In a project angular set a cookies preferencies.",
     "version": "0.0.1",
+    "private": false,
     "keywords": [
         "cookies",
         "cookies-pref",
