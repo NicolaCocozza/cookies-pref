@@ -1,7 +1,7 @@
 {
-    "name": "ngx-nc-cookies-pref",
+    "name": "ngx-cookies-preference",
     "author": "Nicola Cocozza",
-    "description": "In a project angular set a cookies preferencies.",
+    "description": "In a project angular set a cookies preferences.",
     "version": "1.0.0",
     "private": false,
     "keywords": [
