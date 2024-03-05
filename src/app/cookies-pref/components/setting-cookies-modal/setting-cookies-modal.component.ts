@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {CommonModule} from '@angular/common';
@@ -16,6 +16,7 @@ import {ConfigModalModel} from '../../models/config-modal.model';
     ],
     selector: 'setting-cookies-modal',
     standalone: true,
+    encapsulation: ViewEncapsulation.None,
     template: `
         <div id="cookies-pref-modal" style="z-index: 1045; !important;">
             <div id="cookies-pref-modal-header" class="modal-header">
@@ -100,12 +101,12 @@ import {ConfigModalModel} from '../../models/config-modal.model';
         </div>
     `,
     styles: [`
-        #cookies-pref-modal {
-            z-index: 1045 !important;
-        }
-
         .f-size-2e5rem {
             font-size: 2.5rem;
+        }
+
+        ngb-modal-window {
+            z-index: 1055 !important;
         }
     `]
 })
