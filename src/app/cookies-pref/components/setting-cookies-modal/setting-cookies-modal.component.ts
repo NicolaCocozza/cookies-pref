@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {InputSwitchModule} from 'primeng/inputswitch';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgClass} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {CookiesPref} from '../../models/cookies-pref.model';
@@ -12,7 +12,8 @@ import {ConfigModalModel} from '../../models/config-modal.model';
         CommonModule,
         TranslateModule,
         FormsModule,
-        InputSwitchModule
+        InputSwitchModule,
+        NgClass
     ],
     selector: 'setting-cookies-modal',
     standalone: true,
