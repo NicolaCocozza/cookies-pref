@@ -2,7 +2,7 @@
     "name": "ngx-cookies-preference",
     "author": "Nicola Cocozza",
     "description": "In a project angular set a cookies preferences.",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "private": false,
     "keywords": [
         "cookies",
@@ -15,8 +15,8 @@
         "type": "git",
         "url": "https://github.com/NicolaCocozza/cookies-pref.git"
     },"peerDependencies": {
-    "@angular/common": "^16.2.12",
-    "@angular/core": "^16.2.12"
+    "@angular/common": "^17.1.2",
+    "@angular/core": "^17.1.2"
 },
     "dependencies": {
         "tslib": "^2.3.0"
