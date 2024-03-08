@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgClass} from '@angular/common';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
 import {InputSwitchModule} from 'primeng/inputswitch';
@@ -14,7 +14,8 @@ import {ConfigPopup} from '../../models/config-popup.model';
         CommonModule,
         TranslateModule,
         FormsModule,
-        InputSwitchModule
+        InputSwitchModule,
+        NgClass
     ],
     standalone: true,
     selector: 'popup-cookies',
