@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfigPopup} from '../../src/app/cookies-pref/models/config-popup.model';
+import {ConfigPopup} from '../../../ngx-nc-cookies-pref/src/lib/cookies-pref/models/config-popup.model';
 
 @Component({
     selector: 'app-root',

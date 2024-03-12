@@ -202,7 +202,7 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.mangeCookie();
+        this.manageCookie();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -220,7 +220,7 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
         modalRef.componentInstance.configModal = this.settingConfigModal();
         modalRef.result.then((cookiesSelected: CookiesPref) => {
             this.setCookie(this.COOKIE_PREF, JSON.stringify(cookiesSelected));
-            this.mangeCookie();
+            this.manageCookie();
         }, _ => {
         });
     }
@@ -232,18 +232,18 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
     public acceptEssentialCookies(): void {
         const cookieAccept = new CookiesPref(true, false, false);
         this.setCookie(this.COOKIE_PREF, JSON.stringify(cookieAccept));
-        this.mangeCookie();
+        this.manageCookie();
     }
 
     public acceptAllCookies(): void {
         const cookieAccept = new CookiesPref(true, true, true);
         this.setCookie(this.COOKIE_PREF, JSON.stringify(cookieAccept));
-        this.mangeCookie();
+        this.manageCookie();
     }
 
     // PRIVATE METHODS
 
-    private mangeCookie(): void {
+    private manageCookie(): void {
         this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
         this.isVisibleCookiesBanner.emit(this.cookiesAlreadyAccepted);
         this.cdr.detectChanges();
@@ -268,14 +268,10 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
     }
 
     private setCookie(name, value): void {
-        const daysToLive = undefined;
         // Encode value in order to escape semicolons, commas, and whitespace
         let cookie = name + '=' + encodeURIComponent(value);
-        if (typeof daysToLive === 'number') {
-            /* Sets the max-age attribute so that the cookie expires
-            after the specified number of days */
-            cookie += '; max-age=' + (daysToLive * 24 * 60 * 60);
-        }
+        // Sets the max-age attribute so that the cookie expires after the specified number of days
+        cookie += '; max-age=' + (10 * 365 * 24 * 60 * 60);
         document.cookie = cookie;
     }
 
