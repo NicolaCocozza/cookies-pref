@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
@@ -183,7 +183,8 @@ import {ConfigPopup} from '../../models/config-popup.model';
                 display: none;
             }
         }
-`]
+`],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PopupCookiesComponent implements OnInit, OnChanges {
 
@@ -194,20 +195,22 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
     public configModal: ConfigModalModel;
     private COOKIE_PREF: string;
 
-    constructor(
-        public cdr: ChangeDetectorRef,
-        public activeModal: NgbModal,
-        public translate: TranslateService,
-    ) {
-    }
+    constructor(public activeModal: NgbModal, public translate: TranslateService) {}
 
     ngOnInit() {
         this.manageCookie();
     }
 
+    // ngOnChanges(changes: SimpleChanges) {
+    //     this.configPopupCookies = changes?.configPopupCookies?.currentValue ?? this.configPopupCookies;
+    //     this.COOKIE_PREF = this.configPopupCookies?.cookieKey;
+    // }
     ngOnChanges(changes: SimpleChanges) {
-        this.configPopupCookies = changes?.configPopupCookies?.currentValue ?? this.configPopupCookies;
-        this.COOKIE_PREF = this.configPopupCookies?.cookieKey;
+        if (changes.configPopupCookies) {
+            // Clona l'oggetto invece di mutarlo
+            this.configPopupCookies = { ...changes?.configPopupCookies?.currentValue };
+            this.COOKIE_PREF = this.configPopupCookies?.cookieKey;
+        }
     }
 
     public openSettingCookieModal(): void {
@@ -220,9 +223,9 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
         modalRef.componentInstance.configModal = this.settingConfigModal();
         modalRef.result.then((cookiesSelected: CookiesPref) => {
             this.setCookie(this.COOKIE_PREF, JSON.stringify(cookiesSelected));
+            console.log('oooo');
             this.manageCookie();
-        }, _ => {
-        });
+        }, _ => {});
     }
 
     public toggleText(): void {
@@ -245,8 +248,8 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
 
     private manageCookie(): void {
         this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
+        console.log('this.cookiesAlreadyAccepted', this.cookiesAlreadyAccepted);
         this.isVisibleCookiesBanner.emit(this.cookiesAlreadyAccepted);
-        this.cdr.detectChanges();
     }
 
     private getCookie(name): string {
@@ -292,5 +295,4 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
         configModal.sizeTextSpaceModal = this.configPopupCookies?.sizeTextSpaceModal;
         return configModal;
     }
-
 }
