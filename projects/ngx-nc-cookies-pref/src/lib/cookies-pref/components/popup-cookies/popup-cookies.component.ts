@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CommonModule, NgClass} from '@angular/common';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
@@ -20,7 +20,7 @@ import {ConfigPopup} from '../../models/config-popup.model';
     standalone: true,
     selector: 'popup-cookies',
     template: `
-        <div id="popup-container" class="bottom-row" *ngIf="!cookiesAlreadyAccepted">
+        <div  *ngIf="!cookiesAlreadyAccepted" id="popup-container" class="bottom-row">
             <div id="popup-container-row" class="row w-100">
                 <div id="popup-container-col-1-long" class="col-xl-10 col-lg-12 col-12 p-5 visibility-cookie-long">
                     <h4 id="title-long" class="font-weight-bold" [style.color]="configPopupCookies?.colorPrincipalText"
@@ -189,7 +189,6 @@ import {ConfigPopup} from '../../models/config-popup.model';
 export class PopupCookiesComponent implements OnInit, OnChanges {
 
     @Input() configPopupCookies: ConfigPopup;
-    @Output() isVisibleCookiesBanner = new EventEmitter<boolean>();
     public showFullText = false;
     public cookiesAlreadyAccepted: boolean;
     public configModal: ConfigModalModel;
@@ -198,19 +197,12 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
     constructor(public activeModal: NgbModal, public translate: TranslateService) {}
 
     ngOnInit() {
-        this.manageCookie();
+        this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
     }
 
-    // ngOnChanges(changes: SimpleChanges) {
-    //     this.configPopupCookies = changes?.configPopupCookies?.currentValue ?? this.configPopupCookies;
-    //     this.COOKIE_PREF = this.configPopupCookies?.cookieKey;
-    // }
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.configPopupCookies) {
-            // Clona l'oggetto invece di mutarlo
-            this.configPopupCookies = { ...changes?.configPopupCookies?.currentValue };
-            this.COOKIE_PREF = this.configPopupCookies?.cookieKey;
-        }
+        this.configPopupCookies = changes?.configPopupCookies?.currentValue ?? this.configPopupCookies;
+        this.COOKIE_PREF = this.configPopupCookies?.cookieKey;
     }
 
     public openSettingCookieModal(): void {
@@ -223,8 +215,8 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
         modalRef.componentInstance.configModal = this.settingConfigModal();
         modalRef.result.then((cookiesSelected: CookiesPref) => {
             this.setCookie(this.COOKIE_PREF, JSON.stringify(cookiesSelected));
-            console.log('oooo');
-            this.manageCookie();
+            this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
+            console.log('settingConfigModal', this.cookiesAlreadyAccepted);
         }, _ => {});
     }
 
@@ -235,22 +227,18 @@ export class PopupCookiesComponent implements OnInit, OnChanges {
     public acceptEssentialCookies(): void {
         const cookieAccept = new CookiesPref(true, false, false);
         this.setCookie(this.COOKIE_PREF, JSON.stringify(cookieAccept));
-        this.manageCookie();
+        this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
+        console.log('acceptEssentialCookies', this.cookiesAlreadyAccepted);
     }
 
     public acceptAllCookies(): void {
         const cookieAccept = new CookiesPref(true, true, true);
         this.setCookie(this.COOKIE_PREF, JSON.stringify(cookieAccept));
-        this.manageCookie();
+        this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
+        console.log('acceptAllCookies', this.cookiesAlreadyAccepted);
     }
 
     // PRIVATE METHODS
-
-    private manageCookie(): void {
-        this.cookiesAlreadyAccepted = this.getCookie(this.COOKIE_PREF) != null;
-        console.log('this.cookiesAlreadyAccepted', this.cookiesAlreadyAccepted);
-        this.isVisibleCookiesBanner.emit(this.cookiesAlreadyAccepted);
-    }
 
     private getCookie(name): string {
         // Split cookie string and get all individual name=value pairs in an array
